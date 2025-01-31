@@ -13,8 +13,7 @@ export const createTable = pgTableCreator((name) => `momento_${name}`);
 
 export const user = createTable("user", {
   id: text("id").primaryKey(),
-  name: text("name").notNull(),
-  handle: text("handle").notNull().unique(),
+  name: text("name").notNull().unique(),
   bio: text("bio"),
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").notNull(),
