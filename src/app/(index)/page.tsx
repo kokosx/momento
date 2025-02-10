@@ -132,7 +132,7 @@ export default function SignupPage() {
           Don&apos;t have an account yet?
         </span>{" "}
         <Link href="/signup" className="text-primary hover:underline">
-          Sign up
+          Sign upa
         </Link>
       </div>
     </div>

@@ -7,6 +7,17 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "4mb",
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "fpwqupmxjmbseyclinpv.supabase.co",
+        port: "",
+        pathname: "**",
+        search: "",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

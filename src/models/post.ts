@@ -23,9 +23,14 @@ const updateImagePath = (db = _db, id: number, path: string) => {
   return db.update(post).set({ image: path }).where(eq(post.id, id));
 };
 
+const getNewestPosts = async (limit = 10, db = _db) => {
+  return await db.select().from(post).limit(limit).orderBy(post.createdAt);
+};
+
 const model = {
   createPost,
   updateImagePath,
+  getNewestPosts,
 };
 
 export default model;
