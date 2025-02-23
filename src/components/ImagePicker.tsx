@@ -12,7 +12,7 @@ import "react-image-crop/dist/ReactCrop.css";
 
 const ACCEPTED_FILE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_FILE_SIZE_MB = 6;
-const ASPECT_RATIO = 4 / 3;
+const ASPECT_RATIO = 1 / 1;
 
 type Props = {
   setImage: (image: File) => void;
@@ -150,7 +150,24 @@ const ImagePicker = ({ setImage }: Props) => {
                 width={400}
                 height={300}
                 className="max-w-full h-auto"
-                onLoad={(e) => setImageRef(e.currentTarget)}
+                onLoad={(e) => {
+                  const img = e.currentTarget;
+                  setImageRef(img);
+
+                  // Calculate the square crop dimensions
+                  const size = Math.min(img.width, img.height);
+                  const x = (img.width - size) / 2;
+                  const y = (img.height - size) / 2;
+
+                  // Set the crop to a centered square
+                  setCrop({
+                    unit: "px",
+                    width: size,
+                    height: size,
+                    x: x,
+                    y: y,
+                  });
+                }}
               />
             </ReactCrop>
           </div>

@@ -49,8 +49,8 @@ const Page = () => {
   };
 
   return (
-    <div>
-      <div className="w-1/2">
+    <div className="mx-auto w-full">
+      <div className="w-1/2 mx-auto mt-4">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <ImagePicker setImage={setImage} />
@@ -62,8 +62,8 @@ const Page = () => {
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input
-                      type="text"
-                      placeholder="example@mail.com"
+                      type="Title"
+                      placeholder="My trip to the park"
                       {...field}
                     />
                   </FormControl>
@@ -79,7 +79,7 @@ const Page = () => {
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="example@mail.com" {...field} />
+                    <Textarea placeholder="A description..." {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -87,7 +87,7 @@ const Page = () => {
               )}
             />
 
-            <Button className="w-full">Sign in</Button>
+            <Button className="w-full">Add</Button>
           </form>
         </Form>
       </div>
