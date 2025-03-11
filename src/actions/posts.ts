@@ -1,6 +1,6 @@
 "use server";
 
-import { createPostSchema } from "@/lib/schemas";
+import { createPostSchema, likePostSchema } from "@/lib/schemas";
 import { signedInClient } from "@/actions/action-client";
 import models from "../models";
 import { createSupaClient } from "../supabase/server";
@@ -21,4 +21,18 @@ export const createPost = signedInClient
     return {
       postId,
     };
+  });
+
+export const likePost = signedInClient
+  .schema(likePostSchema)
+  .action(async ({ ctx, parsedInput }) => {
+    await models.post.likePost(parsedInput.postId, ctx.user.id);
+    return {};
+  });
+
+export const unlikePost = signedInClient
+  .schema(likePostSchema)
+  .action(async ({ ctx, parsedInput }) => {
+    await models.post.unlikePost(parsedInput.postId, ctx.user.id);
+    return {};
   });

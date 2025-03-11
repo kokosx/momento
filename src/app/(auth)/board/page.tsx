@@ -1,9 +1,11 @@
 import models from "../../../models";
 import { createSupaClient } from "../../../supabase/server";
 import PostCard from "../../../components/PostCard";
+import { getSession } from "../../../auth";
 
 const page = async () => {
-  const posts = await models.post.getNewestPosts(10);
+  const s = await getSession();
+  const posts = await models.post.getNewestPosts(10, s!.user.id);
   const client = await createSupaClient();
   return (
     <div className="flex flex-col items-center mt-8">

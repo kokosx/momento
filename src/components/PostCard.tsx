@@ -1,5 +1,5 @@
 import { DocumentTextIcon } from "@heroicons/react/24/outline";
-import { HeartIcon as FilledHeartIcon } from "@heroicons/react/24/solid";
+
 import Image from "next/image";
 import React from "react";
 import models from "../models";
@@ -29,10 +29,6 @@ const PostCard = ({ post, client }: Props) => {
         </div>
 
         <div className="flex gap-x-2">
-          <div className="flex">
-            <FilledHeartIcon className="h-6 w-6 text-red-500" />
-            <span>10k</span>
-          </div>
           <div className="flex">
             <DocumentTextIcon className="h-6 w-6" />
             <span>529</span>

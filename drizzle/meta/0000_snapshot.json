@@ -1,5 +1,5 @@
 {
-  "id": "24f97710-13c4-400e-836a-fc8ebc8b525f",
+  "id": "180b939f-d6f1-49c0-a386-617829c02bf2",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -92,6 +92,151 @@
         "momento_account_user_id_momento_user_id_fk": {
           "name": "momento_account_user_id_momento_user_id_fk",
           "tableFrom": "momento_account",
+          "tableTo": "momento_user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.momento_comment": {
+      "name": "momento_comment",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "post_id": {
+          "name": "post_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "momento_comment_user_id_momento_user_id_fk": {
+          "name": "momento_comment_user_id_momento_user_id_fk",
+          "tableFrom": "momento_comment",
+          "tableTo": "momento_user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "momento_comment_post_id_momento_post_id_fk": {
+          "name": "momento_comment_post_id_momento_post_id_fk",
+          "tableFrom": "momento_comment",
+          "tableTo": "momento_post",
+          "columnsFrom": [
+            "post_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.momento_post": {
+      "name": "momento_post",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "momento_post_user_id_momento_user_id_fk": {
+          "name": "momento_post_user_id_momento_user_id_fk",
+          "tableFrom": "momento_post",
           "tableTo": "momento_user",
           "columnsFrom": [
             "user_id"
@@ -208,12 +353,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "handle": {
-          "name": "handle",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
         "bio": {
           "name": "bio",
           "type": "text",
@@ -255,11 +394,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "momento_user_handle_unique": {
-          "name": "momento_user_handle_unique",
+        "momento_user_name_unique": {
+          "name": "momento_user_name_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "handle"
+            "name"
           ]
         },
         "momento_user_email_unique": {
@@ -270,6 +409,72 @@
           ]
         }
       },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.momento_user_likes_post": {
+      "name": "momento_user_likes_post",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "post_id": {
+          "name": "post_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "momento_user_likes_post_user_id_momento_user_id_fk": {
+          "name": "momento_user_likes_post_user_id_momento_user_id_fk",
+          "tableFrom": "momento_user_likes_post",
+          "tableTo": "momento_user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "momento_user_likes_post_post_id_momento_post_id_fk": {
+          "name": "momento_user_likes_post_post_id_momento_post_id_fk",
+          "tableFrom": "momento_user_likes_post",
+          "tableTo": "momento_post",
+          "columnsFrom": [
+            "post_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "momento_user_likes_post_post_id_user_id_pk": {
+          "name": "momento_user_likes_post_post_id_user_id_pk",
+          "columns": [
+            "post_id",
+            "user_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

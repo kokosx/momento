@@ -3,7 +3,9 @@
 
 import {
   boolean,
+  integer,
   pgTableCreator,
+  primaryKey,
   serial,
   text,
   timestamp,
@@ -28,6 +30,20 @@ export const user = createTable("user", {
   updatedAt: timestamp("updated_at").notNull(),
 });
 
+export const user_likes_post = createTable(
+  "user_likes_post",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id),
+    postId: integer("post_id")
+      .notNull()
+      .references(() => post.id),
+    createdAt: timestamp("created_at").notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.postId, t.userId] })]
+);
+
 export const post = createTable("post", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
@@ -38,6 +54,19 @@ export const post = createTable("post", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id),
+});
+
+export const comment = createTable("comment", {
+  id: serial("id").primaryKey(),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").notNull(),
+  updatedAt: timestamp("updated_at").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id),
+  postId: integer("post_id")
+    .notNull()
+    .references(() => post.id),
 });
 
 export const session = createTable("session", {

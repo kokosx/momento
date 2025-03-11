@@ -31,3 +31,7 @@ export const createPostSchema = zfd.formData({
   ),
 });
 export type CreatePostSchema = typeof createPostSchema._output;
+
+export const likePostSchema = z.object({
+  postId: z.string(),
+});

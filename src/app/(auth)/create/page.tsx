@@ -1,6 +1,6 @@
 "use client";
 
-import ImagePicker from "../../../components/ImagePicker";
+import ImagePicker from "@/components/ImagePicker";
 import {
   Form,
   FormControl,
@@ -8,15 +8,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../components/ui/form";
+} from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createPostSchema, CreatePostSchema } from "../../../lib/schemas";
-import { Input } from "../../../components/ui/input";
-import { Button } from "../../../components/ui/button";
+import { createPostSchema, CreatePostSchema } from "@/lib/schemas";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useAction } from "next-safe-action/hooks";
-import { createPost } from "../../../actions/posts";
+import { createPost } from "@/actions/posts";
 import { useForm } from "react-hook-form";
-import { Textarea } from "../../../components/ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
 
 const Page = () => {
