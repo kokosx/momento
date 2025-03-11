@@ -52,7 +52,7 @@ const getNewestPosts = async (limit = 10, userId: string, db = _db) => {
     .orderBy(post.createdAt);
 };
 
-const likePost = async (postId: string, userId: string, db = _db) => {
+const likePost = async (postId: number, userId: string, db = _db) => {
   await db.insert(user_likes_post).values({
     postId,
     userId,
@@ -60,7 +60,7 @@ const likePost = async (postId: string, userId: string, db = _db) => {
   });
 };
 
-const unlikePost = async (postId: string, userId: string, db = _db) => {
+const unlikePost = async (postId: number, userId: string, db = _db) => {
   await db
     .delete(user_likes_post)
     .where(
