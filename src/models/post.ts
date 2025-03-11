@@ -2,7 +2,7 @@ import { _db } from "@/db";
 import { post, user_likes_post } from "@/db/schema";
 import { CreatePostSchema } from "@/lib/schemas";
 import { User } from "better-auth";
-import { and, count, eq, exists } from "drizzle-orm";
+import { and, count, eq, sql } from "drizzle-orm";
 
 const createPost = async (db = _db, data: CreatePostSchema, user: User) => {
   const row = await db
@@ -26,7 +26,7 @@ const updateImagePath = (db = _db, id: number, path: string) => {
 const getNewestPosts = async (limit = 10, userId: string, db = _db) => {
   return await db
     .select({
-      count: count(user_likes_post),
+      like_count: count(user_likes_post),
       id: post.id,
       title: post.title,
       content: post.content,
@@ -34,22 +34,21 @@ const getNewestPosts = async (limit = 10, userId: string, db = _db) => {
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
       userId: post.userId,
-      didUserInitiallyLike: exists(
-        db
-          .select({ id: user_likes_post.userId })
-          .from(user_likes_post)
-          .where(
-            and(
-              eq(user_likes_post.postId, post.id),
-              eq(user_likes_post.userId, userId)
-            )
+      didUserInitiallyLike: sql<boolean>`exists(${db
+        .select({ id: user_likes_post.userId })
+        .from(user_likes_post)
+        .where(
+          and(
+            eq(user_likes_post.postId, post.id),
+            eq(user_likes_post.userId, userId)
           )
-      ),
+        )})`,
     })
     .from(post)
-    .innerJoin(user_likes_post, eq(post.id, user_likes_post.postId))
+    .leftJoin(user_likes_post, eq(post.id, user_likes_post.postId))
     .limit(limit)
-    .orderBy(post.createdAt);
+    .orderBy(post.createdAt)
+    .groupBy(post.id);
 };
 
 const likePost = async (postId: number, userId: string, db = _db) => {

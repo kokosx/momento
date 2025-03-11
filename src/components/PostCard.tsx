@@ -4,6 +4,7 @@ import Image from "next/image";
 import React from "react";
 import models from "../models";
 import { createSupaClient } from "../supabase/server";
+import PostLikeButton from "./PostLikeButton";
 
 type Props = {
   post: Awaited<ReturnType<(typeof models)["post"]["getNewestPosts"]>>[0];
@@ -29,6 +30,11 @@ const PostCard = ({ post, client }: Props) => {
         </div>
 
         <div className="flex gap-x-2">
+          <PostLikeButton
+            postId={post.id}
+            initiallyLiked={post.didUserInitiallyLike}
+            count={post.like_count}
+          />
           <div className="flex">
             <DocumentTextIcon className="h-6 w-6" />
             <span>529</span>
